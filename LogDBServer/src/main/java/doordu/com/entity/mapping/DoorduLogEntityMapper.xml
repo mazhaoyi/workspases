@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="doordu.com.dao.IDoorduLogDao" >
+  <resultMap id="BaseResultMap" type="doordu.com.entity.DoorduLogEntity" >
+    <id column="log_id" property="logId" jdbcType="INTEGER" />
+    <result column="log_request_ip" property="logRequestIp" jdbcType="VARCHAR" />
+    <result column="log_request_server_name" property="logRequestServerName" jdbcType="VARCHAR" />
+    <result column="log_request_title" property="logRequestTitle" jdbcType="VARCHAR" />
+    <result column="log_request_line_number" property="logRequestLineNumber" jdbcType="INTEGER" />
+    <result column="log_request_time" property="logRequestTime" jdbcType="TIMESTAMP" />
+    <result column="line1" property="line1" jdbcType="VARCHAR" />
+    <result column="line2" property="line2" jdbcType="VARCHAR" />
+    <result column="line3" property="line3" jdbcType="VARCHAR" />
+    <result column="line4" property="line4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="doordu.com.entity.DoorduLogEntity" extends="BaseResultMap" >
+    <result column="log_request_desc" property="logRequestDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    log_id, log_request_ip, log_request_server_name, log_request_title, log_request_line_number, 
+    log_request_time, line1, line2, line3, line4
+  </sql>
+  <sql id="Blob_Column_List" >
+    log_request_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from log_tb_201609
+    where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from log_tb_201609
+    where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="log_id" parameterType="doordu.com.entity.DoorduLogEntity" >
+    insert into log_tb_201609 (log_request_ip, log_request_server_name, 
+      log_request_title, log_request_line_number, 
+      log_request_time, line1, line2, 
+      line3, line4, log_request_desc
+      )
+    values (#{logRequestIp,jdbcType=VARCHAR}, #{logRequestServerName,jdbcType=VARCHAR}, 
+      #{logRequestTitle,jdbcType=VARCHAR}, #{logRequestLineNumber,jdbcType=INTEGER}, 
+      #{logRequestTime,jdbcType=TIMESTAMP}, #{line1,jdbcType=VARCHAR}, #{line2,jdbcType=VARCHAR}, 
+      #{line3,jdbcType=VARCHAR}, #{line4,jdbcType=VARCHAR}, #{logRequestDesc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertList" useGeneratedKeys="true" keyProperty="log_id" parameterType="java.util.List">
+  	insert into log_tb_201609 (log_request_ip, log_request_server_name, 
+      log_request_title, log_request_line_number, 
+      log_request_time, line1, line2, 
+      line3, line4, log_request_desc
+      )
+    values
+    <foreach collection="list" item="obj" index="index" separator=",">
+    	(#{obj.logRequestIp,jdbcType=VARCHAR}, #{obj.logRequestServerName,jdbcType=VARCHAR}, 
+      #{obj.logRequestTitle,jdbcType=VARCHAR}, #{obj.logRequestLineNumber,jdbcType=INTEGER}, 
+      #{obj.logRequestTime,jdbcType=TIMESTAMP}, #{obj.line1,jdbcType=VARCHAR}, #{obj.line2,jdbcType=VARCHAR}, 
+      #{obj.line3,jdbcType=VARCHAR}, #{obj.line4,jdbcType=VARCHAR}, #{obj.logRequestDesc,jdbcType=LONGVARCHAR}
+      )
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="doordu.com.entity.DoorduLogEntity" >
+    insert into log_tb_201609
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        log_id,
+      </if>
+      <if test="logRequestIp != null" >
+        log_request_ip,
+      </if>
+      <if test="logRequestServerName != null" >
+        log_request_server_name,
+      </if>
+      <if test="logRequestTitle != null" >
+        log_request_title,
+      </if>
+      <if test="logRequestLineNumber != null" >
+        log_request_line_number,
+      </if>
+      <if test="logRequestTime != null" >
+        log_request_time,
+      </if>
+      <if test="line1 != null" >
+        line1,
+      </if>
+      <if test="line2 != null" >
+        line2,
+      </if>
+      <if test="line3 != null" >
+        line3,
+      </if>
+      <if test="line4 != null" >
+        line4,
+      </if>
+      <if test="logRequestDesc != null" >
+        log_request_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="logRequestIp != null" >
+        #{logRequestIp,jdbcType=VARCHAR},
+      </if>
+      <if test="logRequestServerName != null" >
+        #{logRequestServerName,jdbcType=VARCHAR},
+      </if>
+      <if test="logRequestTitle != null" >
+        #{logRequestTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="logRequestLineNumber != null" >
+        #{logRequestLineNumber,jdbcType=INTEGER},
+      </if>
+      <if test="logRequestTime != null" >
+        #{logRequestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="line1 != null" >
+        #{line1,jdbcType=VARCHAR},
+      </if>
+      <if test="line2 != null" >
+        #{line2,jdbcType=VARCHAR},
+      </if>
+      <if test="line3 != null" >
+        #{line3,jdbcType=VARCHAR},
+      </if>
+      <if test="line4 != null" >
+        #{line4,jdbcType=VARCHAR},
+      </if>
+      <if test="logRequestDesc != null" >
+        #{logRequestDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="doordu.com.entity.DoorduLogEntity" >
+    update log_tb_201609
+    <set >
+      <if test="logRequestIp != null" >
+        log_request_ip = #{logRequestIp,jdbcType=VARCHAR},
+      </if>
+      <if test="logRequestServerName != null" >
+        log_request_server_name = #{logRequestServerName,jdbcType=VARCHAR},
+      </if>
+      <if test="logRequestTitle != null" >
+        log_request_title = #{logRequestTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="logRequestLineNumber != null" >
+        log_request_line_number = #{logRequestLineNumber,jdbcType=INTEGER},
+      </if>
+      <if test="logRequestTime != null" >
+        log_request_time = #{logRequestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="line1 != null" >
+        line1 = #{line1,jdbcType=VARCHAR},
+      </if>
+      <if test="line2 != null" >
+        line2 = #{line2,jdbcType=VARCHAR},
+      </if>
+      <if test="line3 != null" >
+        line3 = #{line3,jdbcType=VARCHAR},
+      </if>
+      <if test="line4 != null" >
+        line4 = #{line4,jdbcType=VARCHAR},
+      </if>
+      <if test="logRequestDesc != null" >
+        log_request_desc = #{logRequestDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="doordu.com.entity.DoorduLogEntity" >
+    update log_tb_201609
+    set log_request_ip = #{logRequestIp,jdbcType=VARCHAR},
+      log_request_server_name = #{logRequestServerName,jdbcType=VARCHAR},
+      log_request_title = #{logRequestTitle,jdbcType=VARCHAR},
+      log_request_line_number = #{logRequestLineNumber,jdbcType=INTEGER},
+      log_request_time = #{logRequestTime,jdbcType=TIMESTAMP},
+      line1 = #{line1,jdbcType=VARCHAR},
+      line2 = #{line2,jdbcType=VARCHAR},
+      line3 = #{line3,jdbcType=VARCHAR},
+      line4 = #{line4,jdbcType=VARCHAR},
+      log_request_desc = #{logRequestDesc,jdbcType=LONGVARCHAR}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="doordu.com.entity.DoorduLogEntity" >
+    update log_tb_201609
+    set log_request_ip = #{logRequestIp,jdbcType=VARCHAR},
+      log_request_server_name = #{logRequestServerName,jdbcType=VARCHAR},
+      log_request_title = #{logRequestTitle,jdbcType=VARCHAR},
+      log_request_line_number = #{logRequestLineNumber,jdbcType=INTEGER},
+      log_request_time = #{logRequestTime,jdbcType=TIMESTAMP},
+      line1 = #{line1,jdbcType=VARCHAR},
+      line2 = #{line2,jdbcType=VARCHAR},
+      line3 = #{line3,jdbcType=VARCHAR},
+      line4 = #{line4,jdbcType=VARCHAR}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+</mapper>
